@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 // FontAwesome
 import {
@@ -73,14 +73,14 @@ function Starfield() {
     const draw = () => {
       if (!ctx) return;
 
-      // background gradient
+      // background gradient with new theme
       const grad = ctx.createLinearGradient(0, 0, width, height);
-      grad.addColorStop(0, "#0b0b0f");
-      grad.addColorStop(1, "#140b12");
+      grad.addColorStop(0, "#000000");
+      grad.addColorStop(1, "#000000");
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
 
-      // red radial glow
+      // radial glow with new theme colors
       const rad = ctx.createRadialGradient(
         width * 0.5,
         height * 0.3,
@@ -89,7 +89,7 @@ function Starfield() {
         height * 0.3,
         Math.max(width, height)
       );
-      rad.addColorStop(0, "rgba(180,10,40,0.25)");
+      rad.addColorStop(0, "rgba(86, 130, 177, 0.3)");
       rad.addColorStop(1, "rgba(0,0,0,0)");
       ctx.fillStyle = rad;
       ctx.fillRect(0, 0, width, height);
@@ -230,7 +230,7 @@ export default function Portfolio() {
             onClick={() => scrollToId("hero")}
             className="font-semibold tracking-wide text-white/90 hover:text-white transition"
           >
-            <b>Deepika Rajpurohit</b>
+            <b> <span className="text-[#5682B1]">Deepika Rajpurohit</span></b>
           </button>
           <div className="hidden gap-2 sm:flex">
             {["About", "Education", "Skills", "Projects", "Contact"].map(
@@ -260,7 +260,7 @@ export default function Portfolio() {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-6xl font-bold"
           >
-            Hi, I'm Deepika Rajpurohit
+            Hi, I'm <span className="text-[#5682B1]">Deepika Rajpurohit</span>
           </motion.h1>
 
           <p className="text-lg text-gray-300 max-w-lg">
@@ -292,9 +292,9 @@ export default function Portfolio() {
               <FaEnvelope size={24} />
             </a>
             <a
-              href="/Deepika_Rajpurohit_CV.pdf"
+              href="/images/DEEPIKA RAJPUROHIT.pdf"
               download
-              className="flex items-center gap-2 px-4 py-2 bg-red-600 rounded-2xl hover:bg-red-500 transition"
+              className="flex items-center gap-2 px-4 py-2 bg-[#5682B1] hover:bg-[#739EC9] text-[#FFE8DB] rounded-2xl transition"
             >
               <FaDownload /> Download CV
             </a>
@@ -307,7 +307,7 @@ export default function Portfolio() {
           transition={{ duration: 0.8 }}
           className="bg-gray-900 p-6 rounded-2xl shadow-xl mt-10 md:mt-0 w-full md:w-1/2"
         >
-          <pre className="text-green-400 text-sm">
+          <pre className="text-white text-sm">
             {`const developer = {
     name: "Deepika Rajpurohit",
     role: "Full Stack Developer",
@@ -333,43 +333,53 @@ export default function Portfolio() {
           >
             <h2 className="text-3xl font-bold mb-4">About Me</h2>
             <p className="text-gray-300 leading-relaxed">
-              Hi, I'm Deepika Rajpurohit, a Full Stack Developer passionate
-              about building scalable and user-friendly web applications. I
-              specialize in JavaScript, React.js, and Next.js, and I enjoy
-              turning ideas into real-world digital solutions. I believe in
-              self-learning and continuously upgrading my skills. Along with
-              that, I have gained practical experience through internships: (3
-              Months): Learned HTML, CSS,<b>Codake Softwares Private Limited</b>
-              and Bootstrap, building the foundation of web development. <br />
-              <b>GRID CODE MEDIA – Best Internet Website Development Agency:</b>
-              I HTML, CSS, Bootstrap, Git & GitHub, JavaScript, TypeScript,
-              React.js, Next.js, Node.js, MongoDB, and MySQL, gaining hands-on
-              full-stack development experience. Currently, I’m enhancing my
-              expertise in full-stack development, working with modern tools and
-              frameworks like React.js, Next.js, Node.js, and MongoDB. I’m also
-              pursuing my MCA at Bikaner Technical University (BTU),
-              continuously learning and growing in the field of computer and
-              information sciences. <b>My vision</b> is to contribute to making
-              the web more open, innovative, and impactful.{" "}
-              <b>Core Skillset:</b> JavaScript, React.js, Next.js, Node.js,
-              TypeScript, MongoDB, MySQL Experience: 1+ Year (including
-              internships & projects)
+              Hi, I’m{" "}
+              <span className="text-[#5682B1]">
+                {" "}
+                <b>Deepika Rajpurohit,</b>
+              </span>{" "}
+              a Full Stack Developer passionate about building scalable and
+              user-friendly web applications. I specialize in{" "}
+              <span className="text-[#5682B1]">
+                {" "}
+                <b>JavaScript, React.js, Next.js, Node.js, and MongoDB,</b>
+              </span>
+              with experience in{" "}
+              <span className="text-[#5682B1]">
+                {" "}
+                <b>TypeScript and MySQL,</b>
+              </span>{" "}
+              as well. I’ve gained hands-on full-stack development experience
+              through internships at Codake Softwares Pvt. Ltd. and Grid Code
+              Media, working with modern tools and frameworks. Currently, I’m
+              pursuing my MCA at
+              <span className="text-[#5682B1]">
+                {" "}
+                <b> Bikaner Technical University (BTU),</b>
+              </span>{" "}
+              while continuously upgrading my skills.
+              <span className="text-[#5682B1]">
+                {" "}
+                <b> My vision</b>
+              </span>{" "}
+              is to contribute to making the web more open, innovative, and
+              impactful.
             </p>
             <div className="grid grid-cols-2 gap-4 pt-4">
               <div className="space-y-2">
-                <h3 className="text-red-400 font-medium">Location</h3>
+                <h3 className="text-[#739ec9] font-medium">Location</h3>
                 <p className="text-gray-300">Rajasthan, India</p>
               </div>
               <div className="space-y-2">
-                <h3 className="text-red-400 font-medium">Experience</h3>
+                <h3 className="text-[#739ec9] font-medium">Experience</h3>
                 <p className="text-gray-300"> 1 Years</p>
               </div>
               <div className="space-y-2">
-                <h3 className="text-red-400 font-medium">Email</h3>
+                <h3 className="text-[#739ec9] font-medium">Email</h3>
                 <p className="text-gray-300">deepikaraj01999@gmail.com</p>
               </div>
               <div className="space-y-2">
-                <h3 className="text-red-400 font-medium">Freelance</h3>
+                <h3 className="text-[#739ec9] font-medium">Freelance</h3>
                 <p className="text-gray-300">Available</p>
               </div>
             </div>
@@ -379,92 +389,68 @@ export default function Portfolio() {
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="relative w-full md:w-1/2"
+            className="relative w-full md:w-1/2 flex justify-center"
           >
-            <div className="aspect-square relative rounded-2xl overflow-hidden">
+            <div className="w-[300px] h-[400px] md:w-[350px] md:h-[450px] relative rounded-2xl overflow-hidden border-2 border-white/10">
               <img
-                src="/profile.jpg"
+                src="/images/deepika.jpg"
                 alt="Deepika Rajpurohit"
-                className="object-cover w-full h-full"
+                className="w-full h-full object-cover"
               />
-              {/* Decorative elements */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-red-500/20 to-transparent"></div>
-              <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-tr from-red-500 to-transparent opacity-20"></div>
+              {/* Subtle overlay */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-[#739EC9]/10 to-transparent"></div>
             </div>
             {/* Background decorative elements */}
-            <div className="absolute -z-10 -inset-4 bg-gradient-to-tr from-red-500/20 to-transparent blur-2xl"></div>
+            <div className="absolute -z-10 -inset-4 bg-gradient-to-tr from-[#739EC9]/5 to-transparent blur-2xl"></div>
           </motion.div>
         </div>
       </section>
 
       {/* Skills */}
-      <section
-        id="skills"
-        className="bg-black text-white py-16 px-8 border-t border-white/5"
-      >
-        <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-red-400 via-red-500 to-red-600 bg-clip-text text-transparent">
-          Skills
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-          {skills.map((skill, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.05 }}
-              className="relative group flex flex-col items-center justify-center bg-gray-900 rounded-xl shadow-lg p-6 border border-gray-700 hover:border-red-500 transition duration-300"
-            >
-              <div className="text-4xl mb-3">{skill.icon}</div>
-              <h3 className="font-semibold text-lg">{skill.name}</h3>
-              <p className="text-sm text-red-400">{skill.level}</p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Education */}
-      <section id="education" className="relative border-t border-white/5">
-        <div className="mx-auto max-w-6xl px-4 py-16">
+      <section id="skills" className="py-20 bg-black/50 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6">
           <motion.h2
-            initial={{ opacity: 0, y: 8 }}
+            className="text-3xl font-bold mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="mb-8 text-2xl font-semibold"
           >
-            Education
+            My Skills
           </motion.h2>
-          <div className="relative grid gap-6 sm:grid-cols-2">
-            {[
-              {
-                title: "MCA - Master of Computer Applications",
-                org: "[BTU]",
-                period: "2024 — 2026",
-              },
-              {
-                title: "12th — Commerce",
-                org: "RBSE",
-                period: "2020 — 2021",
-                detail: "Commerce with Computer.",
-              },
-            ].map((ed, i) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            {skills.map((skill, index) => (
               <motion.div
-                key={ed.title}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: i * 0.08 }}
-                className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.03] p-5"
+                key={skill.name}
+                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1,
+                  transition: {
+                    delay: index * 0.08,
+                    duration: 0.5,
+                    ease: "easeOut",
+                  },
+                }}
+                viewport={{ once: true, margin: "-50px" }}
+                whileHover={{
+                  y: -5,
+                  transition: { duration: 0.2 },
+                }}
+                className="bg-[#1a1a1a] p-6 rounded-xl text-center hover:bg-[#2a2a2a] transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#739EC9]/10"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <div className="flex items-center gap-2 text-white">
-                      <GraduationCap className="h-4 w-4 text-red-300" />
-                      <h3 className="font-medium">{ed.title}</h3>
-                    </div>
-                    <p className="text-sm text-zinc-400">{ed.org}</p>
-                  </div>
-                  <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
-                    {ed.period}
-                  </span>
-                </div>
-                <p className="mt-3 text-sm text-zinc-300">{ed.detail}</p>
+                <motion.div
+                  className="text-4xl mb-3 mx-auto w-fit"
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ type: "spring", stiffness: 300 }}
+                >
+                  {skill.icon}
+                </motion.div>
+                <h3 className="font-medium text-[#FFE8DB] mb-1">
+                  {skill.name}
+                </h3>
+                <p className="text-sm text-[#739EC9]">{skill.level}</p>
               </motion.div>
             ))}
           </div>
@@ -472,168 +458,315 @@ export default function Portfolio() {
       </section>
 
       {/* Projects */}
-      <section id="projects" className="relative border-t border-white/5">
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 8 }}
+      <section id="projects" className="py-20 bg-black/30">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-3xl font-bold mb-12 text-center">My Projects</h2>
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* WordPress Projects */}
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              className="bg-[#1a1a1a] p-6 rounded-xl hover:shadow-lg hover:shadow-[#5682B1]/20 transition-all"
+            >
+              <h3 className="text-2xl font-bold mb-4 text-[#FFE8DB]">
+                WordPress Projects
+              </h3>
+              <p className="text-gray-300 mb-4">
+                I have successfully completed 3 WordPress projects, delivering
+                responsive and user-friendly websites with custom themes and
+                plugins.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                <span className="px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-sm">
+                  WordPress
+                </span>
+                <span className="px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-sm">
+                  Elementor
+                </span>
+                <span className="px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-sm">
+                  WooCommerce
+                </span>
+              </div>
+            </motion.div>
+
+            {/* Next.js Project */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="bg-[#1a1a1a] p-6 rounded-xl hover:shadow-lg hover:shadow-[#5682B1]/20 transition-all"
+            >
+              <h3 className="text-2xl font-bold mb-4 text-[#FFE8DB]">
+                Dashboard Project
+              </h3>
+              <p className="text-gray-300 mb-4">
+                Developed a comprehensive dashboard application using Next.js,
+                featuring data visualization, user management, and real-time
+                updates.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                <span className="px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-sm">
+                  Next.js
+                </span>
+                <span className="px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-sm">
+                  TypeScript
+                </span>
+                <span className="px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-sm">
+                  Tailwind CSS
+                </span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Education Section */}
+      <section id="education" className="relative py-20 bg-black/50">
+        <div className="container mx-auto px-6">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-8 text-2xl font-semibold"
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            Projects
-          </motion.h2>
-          <div className="grid gap-6 md:grid-cols-2">
+            <span className="inline-block px-4 py-1 mb-4 text-sm font-medium rounded-full bg-[#5682B1]/20 text-[#739EC9]">
+              Education
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              My <span className="text-[#739EC9]">Education</span>
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#5682B1] to-[#739EC9] mx-auto mb-12"></div>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {[
               {
-                title: "Eminence Interiors Website",
-                desc: "Corporate interior design company website developed in WordPress with responsive UI.",
-                tags: ["WordPress", "Elementor", "Responsive"],
-                demo: "https://eminence.tawafoqrealestate.com/",
-                image: "/images/eminence.png",
+                title: "MCA - Master of Computer Applications",
+                org: "Bikaner Technical University (BTU)",
+                period: "2024 — 2026",
+                description:
+                  "Pursuing advanced studies in computer applications with focus on modern web technologies and software development.",
+                icon: <GraduationCap className="h-6 w-6 text-[#739EC9]" />,
               },
               {
-                title: "Divine Homes Website",
-                desc: "Construction business website built with WordPress showcasing projects and services.",
-                tags: ["WordPress", "Custom Theme", "Responsive"],
-                demo: "https://moonstonevistaa.com/",
-                image: "/images/moonstonevistaa.png",
+                title: "12th — Commerce with Computer",
+                org: "Rajasthan Board of Secondary Education (RBSE)",
+                period: "2020 — 2021",
+                description:
+                  "Completed higher secondary education with a focus on commerce and computer applications.",
+                icon: <GraduationCap className="h-6 w-6 text-[#739EC9]" />,
               },
-            ].map((p, i) => (
-              <motion.article
-                key={p.title}
-                initial={{ opacity: 0, y: 10 }}
+            ].map((edu, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="group overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.03]"
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="group relative p-6 bg-[#1a1a1a] rounded-2xl border border-white/5 hover:border-[#5682B1]/30 transition-all duration-300"
               >
-                <div className="relative h-40 w-full overflow-hidden">
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                <div className="absolute -top-3 -left-3 w-12 h-12 rounded-full bg-[#1a1a1a] border border-white/5 flex items-center justify-center group-hover:bg-[#5682B1]/20 transition-colors">
+                  {edu.icon}
                 </div>
-                <div className="space-y-3 p-5">
-                  <h3 className="text-lg font-medium text-white">{p.title}</h3>
-                  <p className="text-sm text-zinc-300">{p.desc}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {p.tags.map((t) => (
-                      <span
-                        key={t}
-                        className="rounded-full border border-red-500/30 bg-red-500/10 px-2.5 py-1 text-xs text-red-100"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex items-center gap-3 pt-2">
-                    <a
-                      href={p.demo}
-                      target="_blank"
-                      className="inline-flex items-center gap-1 text-sm text-zinc-300 hover:text-white"
-                    >
-                      <ExternalLink className="h-4 w-4" /> Live
-                    </a>
-                  </div>
+                <div className="ml-10">
+                  <h3 className="text-xl font-semibold text-[#FFE8DB] mb-1">
+                    {edu.title}
+                  </h3>
+                  <p className="text-[#739EC9] text-sm mb-3">
+                    {edu.org} • {edu.period}
+                  </p>
+                  <p className="text-gray-300 text-sm">{edu.description}</p>
                 </div>
-              </motion.article>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Contact */}
-      <section
-        id="contact"
-        className="relative border-t border-white/5 bg-black/60"
-      >
-        <div className="mx-auto max-w-6xl px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 8 }}
+      <section id="contact" className="relative py-20 bg-black/30">
+        <div className="container mx-auto px-6">
+          <motion.div
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6 text-2xl font-semibold text-white"
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            Contact
-          </motion.h2>
+            <span className="inline-block px-4 py-1 mb-4 text-sm font-medium rounded-full bg-[#5682B1]/20 text-[#739EC9]">
+              Contact
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Get In <span className="text-[#739EC9]">Touch</span>
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-[#5682B1] to-[#739EC9] mx-auto mb-12"></div>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Have a project in mind or want to discuss potential opportunities?
+              Feel free to reach out and let's create something amazing
+              together.
+            </p>
+          </motion.div>
 
-          <div className="grid gap-6 md:grid-cols-2">
-            {/* Contact Form */}
+          <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="space-y-8"
+            >
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-[#1a1a1a] rounded-xl border border-white/5">
+                  <FaEnvelope className="h-6 w-6 text-[#739EC9]" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-[#FFE8DB] mb-1">
+                    Email Me
+                  </h3>
+                  <a
+                    href="mailto:deepikaraj01999@gmail.com"
+                    className="text-[#739EC9] hover:underline"
+                  >
+                    deepikaraj01999@gmail.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-[#1a1a1a] rounded-xl border border-white/5">
+                  <FaLinkedin className="h-6 w-6 text-[#739EC9]" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-[#FFE8DB] mb-1">
+                    LinkedIn
+                  </h3>
+                  <a
+                    href="https://linkedin.com/in/deepika-rajpurohit-4812a8320"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#739EC9] hover:underline"
+                  >
+                    linkedin.com/in/deepika-rajpurohit
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-[#1a1a1a] rounded-xl border border-white/5">
+                  <FaGithub className="h-6 w-6 text-[#739EC9]" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-semibold text-[#FFE8DB] mb-1">
+                    GitHub
+                  </h3>
+                  <a
+                    href="https://github.com/deepikacode001"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#739EC9] hover:underline"
+                  >
+                    github.com/deepikacode001
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+
             <motion.form
               onSubmit={handleSubmit}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.03] p-6 flex flex-col gap-4"
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="space-y-6 bg-[#1a1a1a] p-8 rounded-2xl border border-white/5"
             >
-              <label className="text-sm text-zinc-300 font-medium">
-                Name
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium text-[#FFE8DB] mb-2"
+                >
+                  Your Name
+                </label>
                 <input
                   type="text"
+                  id="name"
                   name="name"
                   required
-                  className="mt-1 w-full rounded-lg bg-black/30 border border-white/10 px-3 py-2 text-white focus:outline-none focus:border-red-500"
+                  className="w-full px-4 py-3 bg-[#2a2a2a] border border-white/10 rounded-xl focus:ring-2 focus:ring-[#739EC9] focus:border-transparent text-white placeholder-gray-400 transition-all"
+                  placeholder="John Doe"
                 />
-              </label>
-              <label className="text-sm text-zinc-300 font-medium">
-                Email
+              </div>
+
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-[#FFE8DB] mb-2"
+                >
+                  Email Address
+                </label>
                 <input
                   type="email"
+                  id="email"
                   name="email"
                   required
-                  className="mt-1 w-full rounded-lg bg-black/30 border border-white/10 px-3 py-2 text-white focus:outline-none focus:border-red-500"
+                  className="w-full px-4 py-3 bg-[#2a2a2a] border border-white/10 rounded-xl focus:ring-2 focus:ring-[#739EC9] focus:border-transparent text-white placeholder-gray-400 transition-all"
+                  placeholder="john@example.com"
                 />
-              </label>
-              <label className="text-sm text-zinc-300 font-medium">
-                Message
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-[#FFE8DB] mb-2"
+                >
+                  Your Message
+                </label>
                 <textarea
+                  id="message"
                   name="message"
-                  required
                   rows={4}
-                  className="mt-1 w-full rounded-lg bg-black/30 border border-white/10 px-3 py-2 text-white focus:outline-none focus:border-red-500"
-                />
-              </label>
+                  required
+                  className="w-full px-4 py-3 bg-[#2a2a2a] border border-white/10 rounded-xl focus:ring-2 focus:ring-[#739EC9] focus:border-transparent text-white placeholder-gray-400 transition-all resize-none"
+                  placeholder="Hi Deepika, I'd like to discuss a potential project..."
+                ></textarea>
+              </div>
+
               <button
                 type="submit"
-                className="mt-2 px-6 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold transition"
+                className="w-full py-3 px-6 bg-gradient-to-r from-[#5682B1] to-[#739EC9] text-[#FFE8DB] font-medium rounded-xl hover:opacity-90 transition-all transform hover:scale-[1.02] active:scale-95"
               >
                 Send Message
               </button>
             </motion.form>
-            {/* Contact Info */}
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-white/[0.03] p-6 flex flex-col gap-4 justify-center"
-            >
-              <div className="flex items-center gap-3">
-                <FaEnvelope className="text-red-400" />
-                <span className="text-zinc-200">deepikaraj01999@gmail.com</span>
-              </div>
-              <div className="flex items-center gap-3">
-                <FaLinkedin className="text-blue-400" />
-                <a
-                  href="https://linkedin.com/in/deepika-rajpurohit-4812a8320"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-zinc-200 hover:text-white underline"
-                >
-                  linkedin.com/in/deepika-rajpurohit-4812a8320
-                </a>
-              </div>
-              <div className="flex items-center gap-3">
-                <FaGithub className="text-white" />
-                <a
-                  href="https://github.com/deepikacode001"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-zinc-200 hover:text-white underline"
-                >
-                  github.com/deepikacode001
-                </a>
-              </div>
-            </motion.div>
+          </div>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <FaEnvelope className="text-[#739EC9]" />
+              <span className="text-zinc-200">deepikaraj01999@gmail.com</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <FaLinkedin className="text-[#739EC9]" />
+              <a
+                href="https://linkedin.com/in/deepika-rajpurohit-4812a8320"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-zinc-200 hover:text-white underline"
+              >
+                linkedin.com/in/deepika-rajpurohit-4812a8320
+              </a>
+            </div>
+            <div className="flex items-center gap-3">
+              <FaGithub className="text-[#739EC9]" />
+              <a
+                href="https://github.com/deepikacode001"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-zinc-200 hover:text-white underline"
+              >
+                github.com/deepikacode001
+              </a>
+            </div>
           </div>
         </div>
       </section>
