@@ -740,36 +740,46 @@ export default function Portfolio() {
               </button>
             </motion.form>
           </div>
-          <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <FaEnvelope className="text-[#739EC9]" />
-              <span className="text-zinc-200">deepikaraj01999@gmail.com</span>
+        </div>
+      </section>
+      
+      {/* Footer */}
+      <footer className="bg-[#0a0a0a] border-t border-white/5 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="text-[#FFE8DB] text-sm md:text-base">
+              © {new Date().getFullYear()} Developer Portfolio by <span className="text-[#739EC9] font-medium">deepikarajpurohit</span>
             </div>
-            <div className="flex items-center gap-3">
-              <FaLinkedin className="text-[#739EC9]" />
-              <a
-                href="https://linkedin.com/in/deepika-rajpurohit-4812a8320"
-                target="_blank"
+            <div className="flex space-x-6 mt-4 md:mt-0">
+              <a 
+                href="https://github.com/deepikacode001" 
+                target="_blank" 
                 rel="noopener noreferrer"
-                className="text-zinc-200 hover:text-white underline"
+                className="text-[#FFE8DB] hover:text-[#739EC9] transition-colors"
+                aria-label="GitHub"
               >
-                linkedin.com/in/deepika-rajpurohit-4812a8320
+                <FaGithub className="h-5 w-5" />
               </a>
-            </div>
-            <div className="flex items-center gap-3">
-              <FaGithub className="text-[#739EC9]" />
-              <a
-                href="https://github.com/deepikacode001"
-                target="_blank"
+              <a 
+                href="https://linkedin.com/in/deepika-rajpurohit-4812a8320" 
+                target="_blank" 
                 rel="noopener noreferrer"
-                className="text-zinc-200 hover:text-white underline"
+                className="text-[#FFE8DB] hover:text-[#739EC9] transition-colors"
+                aria-label="LinkedIn"
               >
-                github.com/deepikacode001
+                <FaLinkedin className="h-5 w-5" />
+              </a>
+              <a 
+                href="mailto:deepikaraj01999@gmail.com" 
+                className="text-[#FFE8DB] hover:text-[#739EC9] transition-colors"
+                aria-label="Email"
+              >
+                <FaEnvelope className="h-5 w-5" />
               </a>
             </div>
           </div>
         </div>
-      </section>
+      </footer>
     </main>
   );
 }
