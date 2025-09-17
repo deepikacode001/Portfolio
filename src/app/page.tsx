@@ -309,7 +309,7 @@ export default function Portfolio() {
             <a
               href="/images/DEEPIKA RAJPUROHIT.pdf"
               download
-              className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition text-sm sm:text-base whitespace-nowrap"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-[#5682b1] text-white rounded-xl hover:bg-[#5682b1] transition text-sm sm:text-base whitespace-nowrap"
             >
               <FaDownload className="w-3 h-3 sm:w-4 sm:h-4" />
               <span>Resume</span>
