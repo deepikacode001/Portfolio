@@ -2,6 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import dynamic from 'next/dynamic';
+
+// Import ChatBot with SSR disabled to avoid window is not defined error
+const DynamicChatBot = dynamic(() => import('@/components/ChatBot'), { ssr: false });
 
 // FontAwesome
 import {
@@ -220,7 +224,8 @@ export default function Portfolio() {
   };
 
   return (
-    <main className="relative min-h-screen bg-black text-zinc-100 selection:bg-red-600/40 selection:text-white">
+    <div className="w-screen overflow-x-hidden">
+      <main className="relative min-h-screen bg-black text-zinc-100 selection:bg-red-600/40 selection:text-white w-full overflow-x-hidden">
       <Starfield />
 
       {/* Navbar */}
@@ -228,22 +233,29 @@ export default function Portfolio() {
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
           <button
             onClick={() => scrollToId("hero")}
-            className="font-semibold tracking-wide text-white/90 hover:text-white transition"
+            className="font-semibold tracking-wide text-white/90 hover:text-white transition text-sm sm:text-base"
           >
             <b> <span className="text-[#5682B1]">Deepika Rajpurohit</span></b>
           </button>
-          <div className="hidden gap-2 sm:flex">
-            {["About", "Education", "Skills", "Projects", "Contact"].map(
-              (label) => (
-                <button
-                  key={label}
-                  onClick={() => scrollToId(label.toLowerCase())}
-                  className="rounded-xl px-3 py-2 text-sm text-zinc-300 hover:text-white transition"
-                >
-                  {label}
-                </button>
-              )
-            )}
+          <div className="flex gap-2">
+            <div className="hidden sm:flex gap-2">
+              {["About", "Education", "Skills", "Projects", "Contact"].map(
+                (label) => (
+                  <button
+                    key={label}
+                    onClick={() => scrollToId(label.toLowerCase())}
+                    className="rounded-xl px-2 sm:px-3 py-1 sm:py-2 text-xs sm:text-sm text-zinc-300 hover:text-white transition whitespace-nowrap"
+                  >
+                    {label}
+                  </button>
+                )
+              )}
+            </div>
+            <button className="sm:hidden text-white">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
           </div>
         </nav>
       </header>
@@ -251,52 +263,56 @@ export default function Portfolio() {
       {/* Hero */}
       <section
         id="hero"
-        className="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-6 py-20"
+        className="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-24 lg:py-28"
       >
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-4 sm:gap-6 w-full md:w-1/2">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl font-bold"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight"
           >
-            Hi, I'm <span className="text-[#5682B1]">Deepika Rajpurohit</span>
+            Hi, I'm <span className="text-[#5682B1] block sm:inline">Deepika Rajpurohit</span>
           </motion.h1>
 
-          <p className="text-lg text-gray-300 max-w-lg">
+          <p className="text-base sm:text-lg text-gray-300 max-w-lg">
             I am a Full-Stack Developer passionate about creating modern, fast,
             and scalable web applications.
           </p>
 
-          <div className="flex gap-4 mt-4">
+          <div className="flex flex-wrap gap-3 mt-2 sm:mt-4">
             <a
               href="https://github.com/deepikacode001"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-gray-800 rounded-2xl hover:bg-gray-700 transition"
+              className="p-2 sm:p-3 bg-gray-800 rounded-2xl hover:bg-gray-700 transition flex-shrink-0"
+              aria-label="GitHub"
             >
-              <FaGithub size={24} />
+              <FaGithub className="w-5 h-5 sm:w-6 sm:h-6" />
             </a>
             <a
               href="https://linkedin.com/in/deepika-rajpurohit-4812a8320"
               target="_blank"
               rel="noopener noreferrer"
-              className="p-3 bg-gray-800 rounded-2xl hover:bg-gray-700 transition"
+              className="p-2 sm:p-3 bg-gray-800 rounded-2xl hover:bg-gray-700 transition flex-shrink-0"
+              aria-label="LinkedIn"
             >
-              <FaLinkedin size={24} />
+              <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6" />
             </a>
             <a
               href="mailto:deepikaraj01999@gmail.com"
-              className="p-3 bg-gray-800 rounded-2xl hover:bg-gray-700 transition"
+              className="p-2 sm:p-3 bg-gray-800 rounded-2xl hover:bg-gray-700 transition flex-shrink-0"
+              aria-label="Email"
             >
-              <FaEnvelope size={24} />
+              <FaEnvelope className="w-5 h-5 sm:w-6 sm:h-6" />
             </a>
             <a
               href="/images/DEEPIKA RAJPUROHIT.pdf"
               download
-              className="flex items-center gap-2 px-4 py-2 bg-[#5682B1] hover:bg-[#739EC9] text-[#FFE8DB] rounded-2xl transition"
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition text-sm sm:text-base whitespace-nowrap"
             >
-              <FaDownload /> Download CV
+              <FaDownload className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span>Resume</span>
             </a>
           </div>
         </div>
@@ -313,7 +329,6 @@ export default function Portfolio() {
     role: "Full Stack Developer",
     email: "deepikaraj01999@gmail.com",
     github: "github.com/deepikacode001",
-    linkedin: "linkedin.com/in/deepika-rajpurohit-4812a8320"
 };`}
           </pre>
         </motion.div>
@@ -407,50 +422,50 @@ export default function Portfolio() {
       </section>
 
       {/* Skills */}
-      <section id="skills" className="py-20 bg-black/50 overflow-hidden">
-        <div className="max-w-6xl mx-auto px-6">
+      <section id="skills" className="w-full py-12 sm:py-16 lg:py-20 bg-black/50 overflow-hidden">
+        <div className="w-full max-w-6xl mx-auto px-3 sm:px-4">
           <motion.h2
-            className="text-3xl font-bold mb-12 text-center"
+            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-center"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-50px" }}
             transition={{ duration: 0.5 }}
           >
-            My Skills
+            My <span className="text-[#739EC9]">Skills</span>
           </motion.h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 w-full">
             {skills.map((skill, index) => (
               <motion.div
                 key={skill.name}
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 whileInView={{
                   opacity: 1,
                   y: 0,
                   scale: 1,
                   transition: {
-                    delay: index * 0.08,
-                    duration: 0.5,
+                    delay: index * 0.05,
+                    duration: 0.4,
                     ease: "easeOut",
                   },
                 }}
-                viewport={{ once: true, margin: "-50px" }}
+                viewport={{ once: true, margin: "-30px" }}
                 whileHover={{
                   y: -5,
                   transition: { duration: 0.2 },
                 }}
-                className="bg-[#1a1a1a] p-6 rounded-xl text-center hover:bg-[#2a2a2a] transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#739EC9]/10"
+                className="bg-[#1a1a1a] p-4 sm:p-5 rounded-xl text-center hover:bg-[#2a2a2a] transition-all duration-300 shadow-md hover:shadow-lg hover:shadow-[#739EC9]/5"
               >
                 <motion.div
-                  className="text-4xl mb-3 mx-auto w-fit"
+                  className="text-3xl sm:text-4xl mb-2 sm:mb-3 mx-auto w-fit"
                   whileHover={{ scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 300 }}
+                  transition={{ type: "spring", stiffness: 300, damping: 10 }}
                 >
                   {skill.icon}
                 </motion.div>
-                <h3 className="font-medium text-[#FFE8DB] mb-1">
+                <h3 className="font-medium text-[#FFE8DB] text-sm sm:text-base mb-1">
                   {skill.name}
                 </h3>
-                <p className="text-sm text-[#739EC9]">{skill.level}</p>
+                <p className="text-xs sm:text-sm text-[#739EC9]">{skill.level}</p>
               </motion.div>
             ))}
           </div>
@@ -458,30 +473,47 @@ export default function Portfolio() {
       </section>
 
       {/* Projects */}
-      <section id="projects" className="py-20 bg-black/30">
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl font-bold mb-12 text-center">My Projects</h2>
-          <div className="grid md:grid-cols-2 gap-8">
+      <section id="projects" className="py-12 sm:py-16 lg:py-20 bg-black/30">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          <motion.h2 
+            className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+          >
+            My <span className="text-[#739EC9]">Projects</span>
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             {/* WordPress Projects */}
             <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              className="bg-[#1a1a1a] p-6 rounded-xl hover:shadow-lg hover:shadow-[#5682B1]/20 transition-all"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
+              viewport={{ once: true, margin: "-30px" }}
+              className="bg-[#1a1a1a] p-6 rounded-xl hover:shadow-lg hover:shadow-[#5682B1]/10 transition-all flex flex-col h-full min-h-[280px]"
             >
-              <h3 className="text-2xl font-bold mb-4 text-[#FFE8DB]">
-                WordPress Projects
-              </h3>
-              <p className="text-gray-300 mb-4">
-                I have successfully completed 3 WordPress projects, delivering
-                responsive and user-friendly websites with custom themes and
-                plugins.
+              <div className="flex items-start sm:items-center gap-4 mb-4">
+                <div className="p-2 sm:p-3 bg-[#739EC9]/10 rounded-lg">
+                  <FaWordpress className="text-2xl sm:text-3xl text-[#739EC9]" />
+                </div>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#FFE8DB] mb-1">
+                    WordPress Projects
+                  </h3>
+                  <p className="text-sm sm:text-base text-gray-400">
+                    Custom WordPress Development
+                  </p>
+                </div>
+              </div>
+              <p className="text-sm sm:text-base text-gray-300 mb-4">
+                I have successfully completed 3 WordPress projects, delivering responsive and user-friendly websites with custom themes and plugins.
               </p>
               <div className="flex flex-wrap gap-2 mt-4">
-                <span className="px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-sm">
+                <span className="px-2 sm:px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-xs sm:text-sm">
                   WordPress
                 </span>
-                <span className="px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-sm">
+                <span className="px-2 sm:px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-xs sm:text-sm">
                   Elementor
                 </span>
                 <span className="px-3 py-1 bg-[#5682B1]/20 text-[#739EC9] rounded-full text-sm">
@@ -492,10 +524,10 @@ export default function Portfolio() {
 
             {/* Next.js Project */}
             <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-[#1a1a1a] p-6 rounded-xl hover:shadow-lg hover:shadow-[#5682B1]/20 transition-all"
+              className="bg-[#1a1a1a] p-6 rounded-xl hover:shadow-lg hover:shadow-[#5682B1]/20 transition-all flex flex-col h-full min-h-[280px]"
             >
               <h3 className="text-2xl font-bold mb-4 text-[#FFE8DB]">
                 Dashboard Project
@@ -617,6 +649,7 @@ export default function Portfolio() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="space-y-8"
             >
+              {/* Email */}
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-[#1a1a1a] rounded-xl border border-white/5">
                   <FaEnvelope className="h-6 w-6 text-[#739EC9]" />
@@ -634,6 +667,7 @@ export default function Portfolio() {
                 </div>
               </div>
 
+              {/* LinkedIn */}
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-[#1a1a1a] rounded-xl border border-white/5">
                   <FaLinkedin className="h-6 w-6 text-[#739EC9]" />
@@ -648,14 +682,15 @@ export default function Portfolio() {
                     rel="noopener noreferrer"
                     className="text-[#739EC9] hover:underline"
                   >
-                    linkedin.com/in/deepika-rajpurohit
+                    Connect with me
                   </a>
                 </div>
               </div>
 
+              {/* GitHub */}
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-[#1a1a1a] rounded-xl border border-white/5">
-                  <FaGithub className="h-6 w-6 text-[#739EC9]" />
+                  <FaGithub className="h-6 w-6 text-white" />
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold text-[#FFE8DB] mb-1">
@@ -667,77 +702,74 @@ export default function Portfolio() {
                     rel="noopener noreferrer"
                     className="text-[#739EC9] hover:underline"
                   >
-                    github.com/deepikacode001
+                    View my projects
                   </a>
                 </div>
               </div>
             </motion.div>
-
-            <motion.form
-              onSubmit={handleSubmit}
+            
+            <motion.form 
+              onSubmit={handleSubmit} 
+              className="space-y-4 sm:space-y-6 bg-[#1a1a1a] p-6 rounded-xl border border-white/5"
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="space-y-6 bg-[#1a1a1a] p-8 rounded-2xl border border-white/5"
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
+              <h3 className="text-xl font-semibold text-[#FFE8DB] mb-4">Send me a message</h3>
               <div>
                 <label
                   htmlFor="name"
-                  className="block text-sm font-medium text-[#FFE8DB] mb-2"
+                  className="block text-sm font-medium text-gray-300 mb-1.5"
                 >
-                  Your Name
+                  Name
                 </label>
                 <input
                   type="text"
                   id="name"
-                  name="name"
+                  className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2.5 text-sm sm:text-base text-white focus:ring-2 focus:ring-[#739EC9] focus:border-transparent placeholder-gray-500 transition"
+                  placeholder="Your name"
                   required
-                  className="w-full px-4 py-3 bg-[#2a2a2a] border border-white/10 rounded-xl focus:ring-2 focus:ring-[#739EC9] focus:border-transparent text-white placeholder-gray-400 transition-all"
-                  placeholder="John Doe"
                 />
               </div>
-
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-medium text-[#FFE8DB] mb-2"
+                  className="block text-sm font-medium text-gray-300 mb-1.5"
                 >
-                  Email Address
+                  Email
                 </label>
                 <input
                   type="email"
                   id="email"
-                  name="email"
+                  className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2.5 text-sm sm:text-base text-white focus:ring-2 focus:ring-[#739EC9] focus:border-transparent placeholder-gray-500 transition"
+                  placeholder="your.email@example.com"
                   required
-                  className="w-full px-4 py-3 bg-[#2a2a2a] border border-white/10 rounded-xl focus:ring-2 focus:ring-[#739EC9] focus:border-transparent text-white placeholder-gray-400 transition-all"
-                  placeholder="john@example.com"
                 />
               </div>
-
               <div>
                 <label
                   htmlFor="message"
-                  className="block text-sm font-medium text-[#FFE8DB] mb-2"
+                  className="block text-sm font-medium text-gray-300 mb-1.5"
                 >
-                  Your Message
+                  Message
                 </label>
                 <textarea
                   id="message"
-                  name="message"
                   rows={4}
+                  className="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2.5 text-sm sm:text-base text-white focus:ring-2 focus:ring-[#739EC9] focus:border-transparent placeholder-gray-500 transition"
+                  placeholder="Your message here..."
                   required
-                  className="w-full px-4 py-3 bg-[#2a2a2a] border border-white/10 rounded-xl focus:ring-2 focus:ring-[#739EC9] focus:border-transparent text-white placeholder-gray-400 transition-all resize-none"
-                  placeholder="Hi Deepika, I'd like to discuss a potential project..."
                 ></textarea>
               </div>
-
-              <button
+              <motion.button
                 type="submit"
-                className="w-full py-3 px-6 bg-gradient-to-r from-[#5682B1] to-[#739EC9] text-[#FFE8DB] font-medium rounded-xl hover:opacity-90 transition-all transform hover:scale-[1.02] active:scale-95"
+                className="w-full bg-gradient-to-r from-[#739EC9] to-[#5a8bc4] text-white font-medium py-2.5 px-6 rounded-lg hover:opacity-90 transition-opacity text-sm sm:text-base"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 Send Message
-              </button>
+              </motion.button>
             </motion.form>
           </div>
         </div>
@@ -780,6 +812,8 @@ export default function Portfolio() {
           </div>
         </div>
       </footer>
-    </main>
+        <DynamicChatBot/>
+      </main>
+    </div>
   );
 }
