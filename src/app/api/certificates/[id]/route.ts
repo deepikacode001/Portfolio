@@ -6,7 +6,7 @@ import { getAuthUser } from "@/lib/auth";
 // PUT - Update certificate (Admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check authentication
@@ -26,7 +26,7 @@ export async function PUT(
       );
     }
 
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { title, companyName, internshipDuration, imageUrl } = body;
 
@@ -66,7 +66,7 @@ export async function PUT(
 // DELETE - Delete certificate (Admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check authentication
@@ -86,7 +86,7 @@ export async function DELETE(
       );
     }
 
-    const { id } = params;
+    const { id } = await params;
     const certificate = await Certificate.findByIdAndDelete(id);
 
     if (!certificate) {

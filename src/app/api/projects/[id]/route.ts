@@ -6,7 +6,7 @@ import { getAuthUser } from "@/lib/auth";
 // PUT - Update project (Admin only)
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check authentication
@@ -26,7 +26,7 @@ export async function PUT(
       );
     }
 
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { name, link, summary, languages, description } = body;
 
@@ -66,7 +66,7 @@ export async function PUT(
 // DELETE - Delete project (Admin only)
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check authentication
@@ -86,7 +86,7 @@ export async function DELETE(
       );
     }
 
-    const { id } = params;
+    const { id } = await params;
     const project = await Project.findByIdAndDelete(id);
 
     if (!project) {

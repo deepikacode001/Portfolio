@@ -6,7 +6,7 @@ import { getAuthUser } from '@/lib/auth';
 // Mark a contact as read
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check authentication
@@ -20,7 +20,7 @@ export async function PATCH(
 
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { read } = body;
 
@@ -56,7 +56,7 @@ export async function PATCH(
 // Delete a contact
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Check authentication
@@ -70,7 +70,7 @@ export async function DELETE(
 
     await connectDB();
 
-    const { id } = params;
+    const { id } = await params;
     const contact = await Contact.findByIdAndDelete(id);
 
     if (!contact) {
