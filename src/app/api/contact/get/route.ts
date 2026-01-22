@@ -15,7 +15,17 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    await connectDB();
+    // Connect to database with proper error handling
+    const db = await connectDB();
+    if (!db) {
+      return NextResponse.json(
+        { 
+          error: 'Database connection failed',
+          message: 'MongoDB URI not configured. Please check environment variables.'
+        },
+        { status: 500 }
+      );
+    }
 
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '1');

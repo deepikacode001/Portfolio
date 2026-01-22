@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://deepika-rajpurohit.vercel.app"),
   title: "Deepika Rajpurohit - Full Stack Developer | Portfolio",
   description: "Full-Stack Developer passionate about creating modern, fast, and scalable web applications. Specialized in JavaScript, React.js, Next.js, Node.js, and MongoDB. Explore my projects, skills, and experience.",
   keywords: [
