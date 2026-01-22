@@ -15,6 +15,7 @@ import {
   FaChevronDown,
   FaComment,
   FaWhatsapp,
+  FaDatabase,
 } from "react-icons/fa";
 
 interface Contact {
@@ -51,6 +52,7 @@ function AdminPageContent() {
   const [sendingReply, setSendingReply] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const [seeding, setSeeding] = useState(false);
 
   const fetchContacts = async () => {
     try {
@@ -241,6 +243,45 @@ function AdminPageContent() {
     });
   };
 
+  const handleSeedDatabase = async () => {
+    if (!confirm("Are you sure you want to seed the database with sample data? This will add Education, Certificates, Projects, and Resume data if they don't already exist.")) {
+      return;
+    }
+
+    setSeeding(true);
+    try {
+      const token = localStorage.getItem("admin_token");
+      if (!token) {
+        alert("Authentication required. Please login again.");
+        router.push("/login");
+        return;
+      }
+
+      const response = await fetch("/api/seed", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert(`Database seeded successfully!\n\nSummary:\n- Education: ${data.summary.education}\n- Certificates: ${data.summary.certificates}\n- Projects: ${data.summary.projects}\n- Resume: ${data.summary.resume}`);
+        // Refresh the page to show updated data
+        window.location.reload();
+      } else {
+        alert(data.error || "Failed to seed database");
+      }
+    } catch (err) {
+      alert("Error seeding database");
+      console.error(err);
+    } finally {
+      setSeeding(false);
+    }
+  };
+
   const getStatusBadge = (read: boolean) => {
     if (read) {
       return (
@@ -312,6 +353,16 @@ function AdminPageContent() {
               </h1>
               <p className="text-xs sm:text-sm md:text-base text-gray-600 dark:text-gray-400">Manage and respond to messages</p>
             </div>
+            <button
+              onClick={handleSeedDatabase}
+              disabled={seeding}
+              className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-gradient-to-r from-[#739EC9] to-[#5682B1] text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed text-xs sm:text-sm font-medium"
+              title="Add sample data to Education, Certificates, Projects, and Resume sections"
+            >
+              <FaDatabase className="text-sm sm:text-base" />
+              <span className="hidden sm:inline">{seeding ? "Seeding..." : "Seed Database"}</span>
+              <span className="sm:hidden">{seeding ? "..." : "Seed"}</span>
+            </button>
           </motion.div>
 
         {/* Summary Cards */}

@@ -42,16 +42,31 @@ async function connectDB(): Promise<typeof mongoose | null> {
     const opts = {
       bufferCommands: false,
       maxPoolSize: 10,
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 30000, // Increased from 5000 to 30000 for DNS resolution
       socketTimeoutMS: 45000,
+      connectTimeoutMS: 30000, // Added connection timeout
+      // DNS resolution options
+      family: 4, // Force IPv4 (can help with DNS issues)
     };
 
     // @ts-expect-error - mongoose.connect returns Promise<typeof mongoose>
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       console.log("✅ MongoDB connected successfully");
       return mongoose;
-    }).catch((error) => {
-      console.error("❌ MongoDB connection error:", error);
+    }).catch((error: any) => {
+      console.error(" MongoDB connection error:", error);
+      
+      // Specific error handling for DNS issues
+      if (error.code === 'ENOTFOUND' || error.message?.includes('querySrv ENOTFOUND')) {
+        console.error(" DNS Resolution Error - Cannot resolve MongoDB cluster hostname");
+        console.error(" Troubleshooting steps:");
+        console.error("   1. Check your internet connection");
+        console.error("   2. Verify MongoDB Atlas cluster is not paused");
+        console.error("   3. Check firewall/VPN settings");
+        console.error("   4. Try using Google DNS (8.8.8.8) or Cloudflare DNS (1.1.1.1)");
+        console.error("   5. Verify cluster hostname in MONGODB_URI (should be cluster0.gan8wir.mongodb.net)");
+      }
+      
       cached.promise = null;
       throw error;
     });

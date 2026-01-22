@@ -31,13 +31,20 @@ export async function POST(request: NextRequest) {
     // Save to database if connected, otherwise just log
     let savedContact = null;
     if (dbConnection) {
-      savedContact = new Contact({
-        name: name.trim(),
-        email: email.trim().toLowerCase(),
-        message: message.trim(),
-      });
-      await savedContact.save();
-      console.log('Contact saved to database:', savedContact._id);
+      try {
+        savedContact = new Contact({
+          name: name.trim(),
+          email: email.trim().toLowerCase(),
+          message: message.trim(),
+          read: false, // New messages are unread by default
+        });
+        await savedContact.save();
+        console.log('✅ Contact saved to database:', savedContact._id);
+      } catch (dbError: any) {
+        console.error('❌ Error saving contact to database:', dbError);
+        // Continue even if database save fails - still send email
+        console.warn('⚠️ Contact form submission will continue without database save');
+      }
     } else {
       // If MongoDB not configured, just log the data
       console.log('Form submission (MongoDB not configured):', {
@@ -55,10 +62,12 @@ export async function POST(request: NextRequest) {
         const resend = new Resend(process.env.RESEND_API_KEY);
         
         // Email to you (deepikaraj01999@gmail.com)
+        // From: System email (verified) - always your system email
+        // Reply-To: User's email - so when you click Reply, it goes directly to user
         await resend.emails.send({
-          from: process.env.RESEND_FROM_EMAIL || 'Portfolio Contact <onboarding@resend.dev>',
+          from: process.env.RESEND_FROM_EMAIL || 'Contact Form <onboarding@resend.dev>',
           to: 'deepikaraj01999@gmail.com',
-          replyTo: email.trim(),
+          replyTo: email.trim(), // 🔥 User ka email - Reply button se directly user ko jayega
           subject: `New Contact Form Message from ${name.trim()}`,
           html: `
             <!DOCTYPE html>
