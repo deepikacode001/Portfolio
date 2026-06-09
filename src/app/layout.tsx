@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google";
+import JsonLd from "@/components/JsonLd";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,9 +20,12 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://deepika-rajpurohit.vercel.app"),
-  title: "Deepika Rajpurohit - Full Stack Developer | Portfolio",
-  description: "Full-Stack Developer passionate about creating modern, fast, and scalable web applications. Specialized in JavaScript, React.js, Next.js, Node.js, and MongoDB. Explore my projects, skills, and experience.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Deepika Rajpurohit - Full Stack Developer | Portfolio",
+    template: "%s | Deepika Rajpurohit",
+  },
+  description: SITE_DESCRIPTION,
   keywords: [
     "Deepika Rajpurohit",
     "Full Stack Developer",
@@ -36,17 +41,21 @@ export const metadata: Metadata = {
     "Frontend Developer",
     "Backend Developer",
   ],
-  authors: [{ name: "Deepika Rajpurohit" }],
+  authors: [{ name: "Deepika Rajpurohit", url: SITE_URL }],
   creator: "Deepika Rajpurohit",
   publisher: "Deepika Rajpurohit",
+  alternates: {
+    canonical: SITE_URL,
+  },
+  category: "technology",
   openGraph: {
     title: "Deepika Rajpurohit - Full Stack Developer Portfolio",
-    description: "Full-Stack Developer passionate about creating modern, fast, and scalable web applications.",
-    url: "https://deepikarajpurohit.vercel.app",
-    siteName: "Deepika Rajpurohit Portfolio",
+    description: SITE_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
     images: [
       {
-        url: "/favicon.svg",
+        url: "/images/deepika.jpeg",
         width: 1200,
         height: 630,
         alt: "Deepika Rajpurohit - Full Stack Developer",
@@ -58,8 +67,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Deepika Rajpurohit - Full Stack Developer",
-    description: "Full-Stack Developer passionate about creating modern, fast, and scalable web applications.",
-    images: ["/favicon.svg"],
+    description: SITE_DESCRIPTION,
+    images: ["/images/deepika.jpeg"],
   },
   robots: {
     index: true,
@@ -87,6 +96,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} ${playfair.variable} antialiased`}>
+        <JsonLd />
         {children}
       </body>
     </html>
